@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  storage_config_name: "config",
   tmdb_api_url: "https://api.themoviedb.org/",
   tmdb_api_key: "?api_key="
 };

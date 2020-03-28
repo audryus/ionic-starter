@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
+  storage_config_name: "config",
   tmdb_api_url: "https://api.themoviedb.org/3/",
-  tmdb_api_key: "?api_key="
+  tmdb_api_key: "?api_key=" 
 };
 
 export const getApiEndpoint = (endPoint: string) => {
