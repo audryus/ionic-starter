@@ -18,32 +18,22 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
-          }
-        ]
-      },
-      {
-        path: 'tab3',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-          }
-        ]
-      },
-      {
         path: 'feed',
         children: [
           {
             path: '',
             loadChildren: () =>
               import('../feed/feed.module').then(m => m.FeedPageModule)
+          }
+        ]
+      },
+      {
+        path: 'configurations',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../configurations/configurations.module').then(m => m.ConfigurationsPageModule)
           }
         ]
       },
