@@ -5,47 +5,50 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+
+  <ion-card *ngFor="let filme of lista_filmes">
     <ion-item>
       <ion-avatar slot="start">
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <ion-text >
-          <h1 class="feed_title">{{ nome_usuario }}</h1>
+          <h1 class="feed_title">{{ filme.original_title }}</h1>
         </ion-text>
         <ion-text >
-          <p class="feed_date">Novembro 5, 1995</p>
+          <p class="feed_date">{{ filme.release_date }}</p>
         </ion-text>
       </ion-label>
     </ion-item>
-        
-  
-    <img src="assets/images/advance-card-bttf.png"/>
+
+    <img [src]="'https://image.tmdb.org/t/p/w500' + filme.backdrop_path"/>
 
     <ion-card-content>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-      Sunt animi deserunt optio quam at autem!
+      {{filme.overview}}
     </ion-card-content>
 
     <ion-row>
+
       <ion-col>
         <ion-button size="small" fill="clear">
           <ion-icon  slot="start" name="thumbs-up-outline"></ion-icon>
-          <div>12 Likes</div>
+          <div>{{filme.vote_count}} Votes</div>
         </ion-button>
       </ion-col>
+
       <ion-col>
         <ion-button size="small" fill="clear">
           <ion-icon  slot="start" name="chatbubbles-outline"></ion-icon>
-          <div>4 comments</div>
+          <div>{{filme.vote_average}} Rating</div>
         </ion-button>
       </ion-col>
+
       <ion-col>
+          <ion-note>{{filme.popularity}} Score</ion-note>
       </ion-col>
 
     </ion-row>
-
+    
   </ion-card>
-  
+
 </ion-content>
