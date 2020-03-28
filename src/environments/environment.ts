@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  tmdb_api_key: ""
+  tmdb_api_url: "https://api.themoviedb.org/3/",
+  tmdb_api_key: "?api_key="
+};
+
+export const getApiEndpoint = (endPoint: string) => {
+  return `${environment.tmdb_api_url}${endPoint}${environment.tmdb_api_key}`;
 };
 
 /*
