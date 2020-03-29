@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { MovieService } from '../services/movie/movie.service';
 
@@ -10,25 +11,34 @@ import { MovieService } from '../services/movie/movie.service';
   providers: [MovieService]
 })
 export class FeedPage implements OnInit {
-  lista_filmes:Array<any>;
+  lista_filmes:Array<any> = [];
   loader:HTMLIonLoadingElement;
+  refresher:HTMLIonRefresherElement;
+  isRefreshing:boolean = false;
+
+  infiniteScroll: IonInfiniteScroll;
+  page = 1;
 
   constructor(public movieService:MovieService, 
-    public loadingController: LoadingController) { }
+    public loadingController: LoadingController,
+    private route: Router) { }
 
   ngOnInit() { }
 
   ionViewDidEnter() {
+    this.loadFeed();
+  }
+
+  private loadFeed() {
     this.presentLoading().then(() => {
-      this.movieService.getPopularMovies().subscribe(data => {
-        const response = (data as any)
-        this.lista_filmes = response.results;
+      this.movieService.getPopularMovies(this.page).subscribe(data => {
+        const response = (data as any);
+        this.lista_filmes = this.lista_filmes.concat(response.results);
         this.closeLoading();
       }, error => {
         console.log(error);
         this.closeLoading();
       });
-
     });
   }
 
@@ -40,7 +50,30 @@ export class FeedPage implements OnInit {
   }
 
   async closeLoading():Promise<boolean> {
+    if (this.isRefreshing) {
+      await this.refresher.complete();
+      this.isRefreshing = false;
+    }
+    if (this.infiniteScroll) {
+      this.infiniteScroll.complete();
+    }
     return await this.loader.dismiss();
+  }
+
+  doRefresh(event) {
+    this.refresher = event.target;
+    this.isRefreshing = true;
+    this.loadFeed();
+  }
+
+  loadMore(event) {
+    this.page++;
+    this.infiniteScroll = event.target;
+    this.loadFeed();
+  }
+
+  moreDetail(movieId:number) {
+    this.route.navigate(['/movie/'+movieId]);
   }
 
 }

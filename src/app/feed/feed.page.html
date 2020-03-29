@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-card *ngFor="let filme of lista_filmes">
     <ion-item>
@@ -21,7 +24,7 @@
       </ion-label>
     </ion-item>
 
-    <img [src]="'https://image.tmdb.org/t/p/w500' + filme.backdrop_path"/>
+    <img *ngIf="filme.backdrop_path" [src]="'https://image.tmdb.org/t/p/w500' + filme.backdrop_path"/>
 
     <ion-card-content>
       {{filme.overview}}
@@ -48,7 +51,14 @@
       </ion-col>
 
     </ion-row>
-    
+    <ion-button (click)="moreDetail(filme.id)" color="primary" expand="block" shape="round" fill="outline">More Details</ion-button>
   </ion-card>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

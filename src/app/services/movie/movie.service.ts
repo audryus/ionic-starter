@@ -14,7 +14,12 @@ export class MovieService {
     return this.http.get(getApiEndpoint("movie/latest"));
   }
 
-  getPopularMovies() {
-    return this.http.get(getApiEndpoint("movie/popular"));
+  getPopularMovies(page = 1) {
+    const endPoint = getApiEndpoint("movie/popular") + "&page=" + page;
+    return this.http.get(endPoint);
+  }
+
+  getById(movieId:string) {
+    return this.http.get(getApiEndpoint("movie/"+movieId));
   }
 }
