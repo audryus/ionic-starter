@@ -29,11 +29,15 @@ export class FeedPage implements OnInit {
     this.loadFeed();
   }
 
-  private loadFeed() {
+  private loadFeed(newPage?:boolean) {
     this.presentLoading().then(() => {
       this.movieService.getPopularMovies(this.page).subscribe(data => {
         const response = (data as any);
-        this.lista_filmes = this.lista_filmes.concat(response.results);
+        if (newPage) {
+          this.lista_filmes = this.lista_filmes.concat(response.results);
+        } else {
+          this.lista_filmes = response.results;
+        }
         this.closeLoading();
       }, error => {
         console.log(error);
@@ -69,7 +73,7 @@ export class FeedPage implements OnInit {
   loadMore(event) {
     this.page++;
     this.infiniteScroll = event.target;
-    this.loadFeed();
+    this.loadFeed(true);
   }
 
   moreDetail(movieId:number) {
